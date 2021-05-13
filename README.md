@@ -27,6 +27,9 @@
   файлов соединение с базой данных закрывается, НО в функции `getError($num)` вызывается `die()` и выполнение скрипта
   сразу прекращается, а так как функция `getError($num)` может быть вызвана в любом месте, то ранее открытые соединения
   с базой данных не закрываются.
+* Для добавления данных в базу данных написать отдельную функцию `insert(string $table, array $data) {}`.
+* Для обновления данных в базе данных написать отдельную функцию `update(string $table, array $data, $where) {}`.
+* Для удаления данных из базы данных написать отдельную функцию `delete(string $table, $where) {}`.
 
 ### Новые функции
 
@@ -51,7 +54,7 @@ _Пример текущей реализации:_
 
 ```php
 ///запрос на клиента
-$prov = "SELECT * FROM users where session = '$ses'";
+$prov = "SELECT * FROM `users` WHERE `id` = '$id'";
 $res = mysqli_query($connection,$prov);
 $numberkk = mysqli_num_rows($res);
 
@@ -67,7 +70,7 @@ else{
 
 ```php
 ///запрос на клиента
-$prov = "SELECT * FROM users where session = '$ses'";
+$prov = "SELECT * FROM `users` WHERE `id` = '$id'";
 $res = mysqli_query($connection,$prov);
 $numberkk = mysqli_num_rows($res);
 
@@ -89,7 +92,7 @@ _Пример текущей реализации:_
 
 ```php
 ///запрос на клиента
-$prov = "SELECT * FROM users where session = '$ses'";
+$prov = "SELECT * FROM `users` WHERE `id` = '$id'";
 $res = mysqli_query($connection, $prov);
 $numberkk = mysqli_num_rows($res);
 
@@ -144,7 +147,7 @@ function get_result(string $query)
 
 ```php
 ///запрос на клиента
-$query = "SELECT * FROM users where session = '$ses'";
+$query = "SELECT * FROM `users` WHERE `id` = '$id'";
 $result = get_result($query);
 
 if ($result) {
@@ -154,7 +157,7 @@ if ($result) {
 }
 
 // ИЛИ более короткий вариант вариант
-$query = "SELECT * FROM users where session = '$ses'";
+$query = "SELECT * FROM `users` WHERE id = '$id'";
 
 if ($result = get_result($query)) {
     foreach ($result as $row) {
@@ -171,7 +174,7 @@ if ($result = get_result($query)) {
 ```php
 /**
  * Получаем данные из массива $_POST по ключу и возвращаем подготовленные для SQL запроса данные.
- * @param integer|string $key Ключ данных в массив $_POST. 
+ * @param integer|string $key Ключ данных в массиве $_POST. 
  * @return false|string
  */
 function from_post($key)
@@ -212,7 +215,7 @@ _Пример текущей реализации:_
 
 ```php
 ///запрос на клиента
-$prov = "SELECT * FROM users where session = '$ses'";
+$prov = "SELECT * FROM `users` WHERE `session` = '$ses'";
 $res = mysqli_query($connection,$prov);
 $numberkk = mysqli_num_rows($res);
 
