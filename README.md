@@ -220,6 +220,7 @@ if ($result) {
 }
 
 // ИЛИ более короткий вариант вариант
+
 $query = "SELECT * FROM `users` WHERE id = '$id'";
 
 if ($result = db_get($query)) {
@@ -316,17 +317,16 @@ function get_user_data($ses)
 
 function get_user($ses)
 {
-    global $connection;
     global $_SES_;
 
     // Если сессия не найдена, выкидываем ошибку
     if (true === empty($_SES_)) { getError(0); }
     
-    // Запрос данных пользователя
+    // Запрос данных пользователя по хешу сессии
     $query = "SELECT * FROM `users` WHERE `session` = '$_SES_' LIMIT 1";
     $result = db_get($query);
     
-    // Сессия истекла
+    // Пользователь не найден, сессия устарела
     if (false === $result) { getError(0); }
     
     // Возвращаем полученные данные
