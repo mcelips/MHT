@@ -34,7 +34,6 @@ $errors = [
     24 => "Resources are exhausted",
     25 => "You need to build a Power plant",
     26 => "You don't have so many resources"
-
 ];
 
 /**
